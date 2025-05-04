@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router';
+import NewsCards from '../src/components/NewsCards';
 
 const CategoryNews = () => {
     const { id } = useParams();
@@ -8,16 +9,49 @@ const CategoryNews = () => {
 
     const [categoryNews,setCategoryNews] = useState([]);
 
-    useEffect(() => {
-        const filterNews = data.filter((news) => news.category_id == id);
-        console.log(filterNews);
+   useEffect(() => {
+    if (id == "0") {
+      setCategoryNews(data);
+    } else if (id == "1") {
+      const filteredNews = data.filter(
+        (news) => news.others.is_today_pick == true
+      );
 
-        setCategoryNews(filterNews);
-    }, [data, id]);
+      setCategoryNews(filteredNews);
+    } else {
+      const filteredNews = data.filter((news) => news.category_id == id);
+      setCategoryNews(filteredNews);
+    }
+  }, [id, data]);
+    // useEffect(() => {
+    //     if(id == "0"){
+    //         setCategoryNews(data);
+    //         return;
+    //     }
+    //     else if(id == "1"){
+
+    //         const filterNews = data.filter((news) => news.others.is_today_pick == true);
+    //         setCategoryNews(filterNews);
+    //         return;
+    //     }
+    //     else{
+    //         const filterNews = data.filter((news) => news.category_id == id);
+    //         console.log(filterNews);
+    //         setCategoryNews(filterNews);
+    //     }
+        
+    // }, [data, id]);
     
     return (
         <div>
-            Total {categoryNews.length} found
+          <h2 className='font-bold mb-5'>  Total <span className='text-secondary'>{categoryNews.length}</span> news found</h2>
+
+          <div className="grid grid-cols-1 gap-5">
+        {
+        categoryNews.map((news) => (
+          <NewsCards key={news.id} news={news}></NewsCards>
+        ))}
+      </div>
         </div>
     );
 };
