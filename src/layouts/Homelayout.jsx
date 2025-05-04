@@ -7,6 +7,9 @@ const Homelayout = () => {
         <div>
             <header>
                 <Header></Header>
+                <section>
+                    <latestNews></latestNews>
+                </section>
             </header>
             <main>
                 <section className="left-nav"></section>
