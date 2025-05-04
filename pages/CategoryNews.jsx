@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router';
 
 const CategoryNews = () => {
@@ -6,16 +6,18 @@ const CategoryNews = () => {
     const data = useLoaderData();
     // console.log(id,data);
 
-    
+    const [categoryNews,setCategoryNews] = useState([]);
 
     useEffect(() => {
         const filterNews = data.filter((news) => news.category_id == id);
         console.log(filterNews);
+
+        setCategoryNews(filterNews);
     }, [data, id]);
     
     return (
         <div>
-            CategoryNews -{id}
+            Total {categoryNews.length} found
         </div>
     );
 };
